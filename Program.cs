@@ -12,7 +12,7 @@ namespace Project_cat_shifr
         {
             //Console.WriteLine("Привет КОТ!");
             string kot = "кот";
-            //string you_t; //(В данную переменную записывается текст шифрования).
+            
             Console.Write("Введите ваш текст для шифрования кошачим кодом: ");
             string str = Console.ReadLine();
             int len = 0; //(Длинна шифруемого текста)
@@ -36,7 +36,20 @@ namespace Project_cat_shifr
             {
                 for (int i = 0; i < m_n.Length; i++)
                 {
+                    if (t == str.Length) break; //(Полный выход из внешнего цикла for.)
+                    //(Полный выход нужен для того, чтобы заданная строка
+                    //str[t] не вышла за границы)
+
                     m_n[i] = str[t];
+
+                    if ((int)m_n[i] == 32)
+                    {
+                        p += 1; //(Подсчет пробелов)
+                        t++; //(пропуск пробела)
+                        continue; //(переход на следующую итерацию)
+
+                    }
+                        
                     for (int j = 0; j < kot.Length; j++)
                     {
                         i += 1;
