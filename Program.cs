@@ -10,6 +10,31 @@ namespace Project_cat_shifr
     {
         static void Main(string[] args)
         {
+            #region begining auxiliary the code
+            /*
+            char z = ',';
+            int code = (int)z;
+            int c = 0; //(количество запятых)
+            int d = 0; //(количество точек)
+            string str = "пес, 97.,,...,pwd";
+
+            
+            for (int i = 0; i < str.Length; i++)
+            {
+                if ((int)str[i] == 44) c += 1;
+                if ((int)str[i] == 46) d += 1;
+                
+                Console.Write(str[i]);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Кол-во запятых равно " + c);
+            Console.WriteLine("Кол-во точек равно " + d);
+
+            //Console.WriteLine(code);
+            */
+            #endregion End auxiliary the code
+            
             //Console.WriteLine("Привет КОТ!");
             string kot = "кот";
             
@@ -18,13 +43,9 @@ namespace Project_cat_shifr
             int len = 0; //(Длинна шифруемого текста)
             int p = 0; //(переменная для подсчета пробелов)
 
-            //for (int i = 0; i < str.Length;i++)
-            //{
-            //    if ((int)str[i] == 32) p += 1; //(Подсчет пробелов)
-            //    Console.WriteLine(str[i]);
-            //}
-
             len = str.Length+str.Length*3; //(Определени длинны создаваемого массива)
+            //(В данном случае умножение на 3 происходит потому, что длина слова,
+            //которым шифруем, составляет 3 символа.)
 
             //Создаем массив для хранения текста, плюс три ячейки 
             //памяти на каждую букву.
@@ -49,6 +70,18 @@ namespace Project_cat_shifr
                         continue; //(переход на следующую итерацию)
 
                     }
+
+                    if((int)m_n[i] == 44)
+                    {
+                        t++; //(пропуск запятой)
+                        continue; //(переход на следующую итерацию)
+                    }
+
+                    if((int)m_n[i] == 46)
+                    {
+                        t++; //(пропуск точки)
+                        continue; //(переход на следующую итерацию)
+                    }
                         
                     for (int j = 0; j < kot.Length; j++)
                     {
@@ -68,8 +101,7 @@ namespace Project_cat_shifr
             Console.WriteLine();
             Console.WriteLine("Количество пробелов = " + p);
             //Console.WriteLine("Длинна массива равна " + m_n.Length);
-
-
+            
         }
     }
 }
