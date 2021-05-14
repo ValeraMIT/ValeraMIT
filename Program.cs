@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Project_cat_shifr
     {
         static void Main(string[] args)
         {
-            #region begining auxiliary the code
+            #region begining auxiliary the code (начало вспомогательного кода)
             /*
             char z = ',';
             int code = (int)z;
@@ -33,13 +34,57 @@ namespace Project_cat_shifr
 
             //Console.WriteLine(code);
             */
-            #endregion End auxiliary the code
-            
+            #endregion End auxiliary the code (конец вспомогательного кода)
+
             //Console.WriteLine("Привет КОТ!");
-            string kot = "кот";
-            
-            Console.Write("Введите ваш текст для шифрования кошачим кодом: ");
-            string str = Console.ReadLine();
+            string kot = "кот"; //(значением в переменной kot шифруется текст)
+
+            //begining  code choice (начало кода выбора)
+            string ch = null; //переменная для выбора
+            string path = null; //(Путь до текстового файла, который нужно зашифровать)
+            string str = null; //(шифруемый текст)
+
+            Console.WriteLine("Если вы хотите выбрать файл, введите yes.\n"+
+                              "Если вы хотите ввести текст для шифрования" +
+                              "через консоль введите no.");
+            ch = Console.ReadLine();
+
+            switch (ch)
+            {
+                case "yes":
+                    {
+                        Console.WriteLine("Выбор файла");
+                        path = @"C:\Users\Valera\Desktop\Lesson CSharp\Project_cat_shifr\text_fs.txt";
+                        //Open stream for reading (открыть поток для чтения).
+                        StreamReader F_R;
+                        F_R = new StreamReader(path);
+                        str = F_R.ReadToEnd(); //(Читаем данные из файла до конца)
+                        F_R.Close(); //Clear the memory (очистка памяти)
+                    }
+                    break;
+                case "no":
+                    {
+                        //Console.WriteLine("Введите файл для шифрования");
+                        Console.Write("Введите ваш текст для шифрования кошачим кодом: ");
+                        str = Console.ReadLine();
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Вы ввели неверную команду");
+                    break;
+            }
+            //end code choice (конец кода выбора)
+
+            //Console.WriteLine(ch);
+
+            if (ch != "no" && ch != "yes")
+            {
+                Console.WriteLine("Закрытие программы");
+                Environment.Exit(0); //Close the console (закрытие консоли).
+            }
+
+            //Console.Write("Введите ваш текст для шифрования кошачим кодом: ");
+            //string str = Console.ReadLine();
             int len = 0; //(Длинна шифруемого текста)
             int p = 0; //(переменная для подсчета пробелов)
 
@@ -97,11 +142,19 @@ namespace Project_cat_shifr
             {
                 Console.Write(m_n[i]);
             }
-        
+
+            //(Записываем шифрованный текст в файл)
+            path = @"C:\Users\Valera\\Desktop\Lesson CSharp\Project_cat_shifr\shifr_text.txt";
+            //(открыть поток для записи в файл)
+            StreamWriter F_w;
+            F_w = new StreamWriter(path);
+            F_w.Write(m_n);
+            F_w.Close(); //Clear memory (очистка памяти)
+
             Console.WriteLine();
             Console.WriteLine("Количество пробелов = " + p);
             //Console.WriteLine("Длинна массива равна " + m_n.Length);
-            
+
         }
     }
 }
