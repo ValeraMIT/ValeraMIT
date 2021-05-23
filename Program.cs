@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Project_cat_shifr
 {
     class Program
     {
+
+        [STAThread] //The directory need in order to main (директива нужна для того, чтобы главный)
+        //stream has become single-threaded COM object. (поток стал однопоточным COM объектом)
         static void Main(string[] args)
         {
             #region begining auxiliary the code (начало вспомогательного кода)
@@ -36,13 +40,12 @@ namespace Project_cat_shifr
             */
             #endregion End auxiliary the code (конец вспомогательного кода)
 
-            //Console.WriteLine("Привет КОТ!");
             string kot = "кот"; //(значением в переменной kot шифруется текст)
 
-            //begining  code choice (начало кода выбора)
-            string ch = null; //переменная для выбора
-            string path = null; //(Путь до текстового файла, который нужно зашифровать)
-            string str = null; //(шифруемый текст)
+            //Begining code choice (Начало кода выбора)
+            string ch = null; //The variable for choice (Переменная для выбора)
+            string path = null; //The Path to text file, which should be encrypted. (Путь к текстовому файлу, который нужно зашифровать)
+            string str = null; //A text encrypted (шифруемый текст)
 
             Console.WriteLine("Если вы хотите выбрать файл, введите yes.\n"+
                               "Если вы хотите ввести текст для шифрования" +
@@ -54,7 +57,21 @@ namespace Project_cat_shifr
                 case "yes":
                     {
                         Console.WriteLine("Выбор файла");
-                        path = @"C:\Users\Valera\Desktop\Lesson CSharp\Project_cat_shifr\text_fs.txt";
+                        //path = @"C:\Users\Valera\Desktop\Lesson CSharp\Project_cat_shifr\text_fs.txt";
+                        //Choose the Path to file (Выбрать путь к файлу)
+                        OpenFileDialog F = new OpenFileDialog();
+                        F.Title = "Выберите текстовый файл для шифрования";
+                        F.Filter = "Text File(*.txt)|*.txt";
+                        F.ShowDialog();
+
+                        path = F.FileName;
+                        if(path =="")
+                        {
+                            Console.WriteLine("Вы не выбрали файл.");
+                            Console.WriteLine("Закрытие программы");
+                            Environment.Exit(0);
+                        }
+                       
                         //Open stream for reading (открыть поток для чтения).
                         StreamReader F_R;
                         F_R = new StreamReader(path);
@@ -85,18 +102,18 @@ namespace Project_cat_shifr
 
             //Console.Write("Введите ваш текст для шифрования кошачим кодом: ");
             //string str = Console.ReadLine();
-            int len = 0; //(Длинна шифруемого текста)
-            int p = 0; //(переменная для подсчета пробелов)
+            int len = 0; //The length encrypted text(Длинна шифруемого текста)
+            int p = 0; //The varia(переменная для подсчета пробелов)
 
             len = str.Length+str.Length*3; //(Определени длинны создаваемого массива)
             //(В данном случае умножение на 3 происходит потому, что длина слова,
             //которым шифруем, составляет 3 символа.)
 
-            //Создаем массив для хранения текста, плюс три ячейки 
+            //Создаем массив для хранения текста. Добавляем три ячейки 
             //памяти на каждую букву.
             char[] m_n = new char[len];
 
-            //Выполнение самого шифра
+            //Begining the code on data encryption (Начало кода на шифрование данных)
             int t = 0; //(переменная для контроля длинны заданного текста)
             while (t < str.Length)
             {
@@ -137,14 +154,27 @@ namespace Project_cat_shifr
                 }
             }
 
-            //(Выводим в консоль)
+            //The end code on data encryption (Конец кода на шифрование данных)
+
+            //We write in the console(Пишем в консоль)
             for (int i=0; i < m_n.Length; i++)
             {
                 Console.Write(m_n[i]);
             }
 
+
             //(Записываем шифрованный текст в файл)
-            path = @"C:\Users\Valera\\Desktop\Lesson CSharp\Project_cat_shifr\shifr_text.txt";
+
+            //Choose a path for saving a file (выбрать путь для сохранения файла)
+            SaveFileDialog S = new SaveFileDialog();
+            S.Title = "Сохранение зашифрованного файла";
+            S.CreatePrompt = true; //create the new file if such a file not exist (создать новый файл, если такого не существует)
+            S.OverwritePrompt = true; //overwrite the file (перезапись файла)
+            S.Filter = "Text File (*.txt)|*.txt";
+            S.ShowDialog();
+            path = S.FileName;
+            //path = @"C:\Users\Valera\\Desktop\Lesson CSharp\Project_cat_shifr\shifr_text.txt";
+            
             //(открыть поток для записи в файл)
             StreamWriter F_w;
             F_w = new StreamWriter(path);
